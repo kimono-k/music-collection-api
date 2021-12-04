@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const url = "mongodb://localhost:27017/music_collection";
+const url = "mongodb://localhost/music_collection";
 
 const app = express();
 
@@ -34,6 +34,6 @@ app.use("/albums", albumRouter);
 /**
  * Listen to http://localhost:8000
  */
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8070, () => {
   console.log("Server Started");
 });
