@@ -9,9 +9,9 @@ const Album = require("../models/album"); // album.js -> model
 router.get("/", async (req, res) => {
   try {
     const albums = await Album.find(); // SELECT ALL FROM ALBUM MODEL
-    res.json(albums); // Give data back in .json format
+    res.status(201).json(albums); // Give data back in .json format
   } catch (err) {
-    res.send("Error " + err); // Error message if query fails
+    res.status(500).send("Error " + err); // Error message if query fails
   }
 });
 
@@ -21,7 +21,7 @@ router.get("/:id", async (req, res) => {
     const album = await Album.findById(req.params.id);
     res.json(album); // Give data back in .json format
   } catch (err) {
-    res.send("Error " + err); // Error message if query fails
+    res.status(404).send("Error " + err); // Error message if query fails
   }
 });
 
@@ -43,9 +43,11 @@ router.post("/", async (req, res) => {
   /** Saving the object */
   try {
     const a1 = await album.save();
-    res.json(a1);
+    res.status(201).json(a1);
   } catch (err) {
-    res.send("Make sure you fill in the values for name, tracks, and year.");
+    res
+      .status(400)
+      .send("Make sure you fill in the values for name, tracks, and year.");
   }
 });
 
@@ -61,12 +63,64 @@ router.patch("/:id", async (req, res) => {
     album.tracks = req.body.tracks;
     album.year = req.body.year;
     const a1 = await album.save();
-    res.json(a1);
+    res.status(200).json(a1);
   } catch (err) {
-    res.send(
-      "Make sure you give a value for the properties: name, tracks, and year :3"
-    );
+    res
+      .status(400)
+      .send(
+        "Make sure you give a value for the properties: name, tracks, and year :3"
+      );
   }
+});
+
+/**
+ * PUT Request
+ * Modifies all items with a specific id
+ */
+router.put("/:id", async (req, res) => {
+  try {
+    const album = await Album.findById(req.params.id);
+    album.name = req.body.name;
+    album.tracks = req.body.tracks;
+    album.year = req.body.year;
+    const a1 = await album.save();
+    res.status(201).json(a1);
+  } catch (err) {
+    res
+      .status(400)
+      .send(
+        "Make sure you give a value for the properties: name, tracks, and year :3"
+      );
+  }
+});
+
+/**
+ * DELETE Request
+ * Deletes an item with a specific id
+ */
+router.delete("/:id", async (req, res) => {
+  try {
+    const a1 = await album.remove();
+    res.status(204).json(a1);
+  } catch (err) {
+    res
+      .status(404)
+      .send(
+        "Make sure you give a value for the properties: name, tracks, and year :3"
+      );
+  }
+});
+
+/**
+ * OPTIONS method for the whole collection
+ * Here I've specified the possible HTTP requests on this webservice
+ */
+router.options("/", (req, res) => {
+  res.header("Allow", "GET, POST, OPTIONS").send();
+});
+
+router.options("/:id", (req, res) => {
+  res.header("Allow", "GET, POST, OPTIONS").send();
 });
 
 /** Export the albums router */

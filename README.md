@@ -1,3 +1,11 @@
+# Checkpoint
+
+- Implement
+
+# Server API
+
+http://145.24.222.163:8070/albums
+
 # REST API - CRUD
 
 - POST = CREATE

@@ -8,6 +8,10 @@ const app = express();
 mongoose.connect(url, { useNewUrlParser: true });
 const con = mongoose.connection;
 
+app.get("/", (req, res) => {
+  res.send("wowzers");
+});
+
 /**
  * Check if the db connection is opened
  */
