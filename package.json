@@ -1,10 +1,11 @@
 {
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongodb": "^4.2.1",
     "mongoose": "^6.0.14",
     "node": "^17.1.0",
-    "body-parser": "^1.19.0",
     "nodemon": "^2.0.15"
   },
   "name": "music_collection_api",
@@ -15,7 +16,7 @@
     "start": "nodemon app.js",
     "devStart": "nodemon app.js"
   },
-  "author": "kevinnarain94@gmail.com",
+  "author": "",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.15"

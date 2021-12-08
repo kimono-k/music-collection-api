@@ -1,15 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
+let albumRouter = require("./routes/albums")();
+const bodyParser = require("body-parser");
 const url = "mongodb://localhost/music_collection";
-
-const app = express();
+let app = express();
 
 // Connect to db, object to prevent error
 mongoose.connect(url, { useNewUrlParser: true });
 const con = mongoose.connection;
 
 app.get("/", (req, res) => {
-  res.send("wowzers");
+  res.header("Content-Type", "application/json");
+  res.send('{"message": "Wowzers in my trousers it works!"}');
 });
 
 /**
@@ -19,24 +21,19 @@ con.on("open", () => {
   console.log("connected to db...");
 });
 
-/**
- * Creating a Router
- */
-const albumRouter = require("./routes/albums");
-
 // Middleware
-app.use(express.json());
-// app.use(express.urlencoded());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extendedparser: true, extended: true }));
 
 /**
- * Middleware
  * For all albums requests you have to send a request to the albums router"
  * albumRouter == albums.js
+ * Points to localhost:8070/api/
  */
-app.use("/albums", albumRouter);
+app.use("/api", albumRouter);
 
 /**
- * Listen to http://localhost:8000
+ * Listen to http://localhost:8070
  */
 app.listen(process.env.PORT || 8070, () => {
   console.log("Server Started");

@@ -1,10 +1,20 @@
 const mongoose = require("mongoose");
 
 /** Album Model = Entity
- *  name, tracks, year = Table names
+ *  name, artist, genre, tracks, year = Table names
  */
 const albumSchema = new mongoose.Schema({
   name: {
+    type: String,
+    required: true,
+  },
+
+  artist: {
+    type: String,
+    required: true,
+  },
+
+  genre: {
     type: String,
     required: true,
   },
